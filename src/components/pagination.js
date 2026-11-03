@@ -13,7 +13,8 @@ pages.firstElementChild.remove();                                // и удал�
 
         // @todo: #2.6 — обработать действия
 if (action) switch(action.name) {
-    case 'prev': page = Math.max(1, page - 1); break;            // переход на предыдущую страницу
+    case 'prev': page = Math.max(1, page - 1); 
+    break;            // переход на предыдущую страницу
     case 'next': page = Math.min(pageCount, page + 1); break;    // переход на следующую страницу
     case 'first': page = 1; break;                                // переход на первую страницу
     case 'last': page = pageCount; break;                   // переход на последнюю страницу
