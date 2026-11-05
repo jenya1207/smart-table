@@ -290,14 +290,22 @@ function compare(source, target, rulesList) {
  * Это позволяет повторно использовать одни и те же настройки сравнения без их
  * повторного определения.
  */
-   export function createComparison(ruleNames = [], customRules = []) {
-       // Собираем правила по именам из rules (если нужно) + customRules
-       // Но так как мы передаем allRules как customRules (массив функций), 
-       // а ruleNames пустой, то просто возвращаем замыкание на compare
-       const rulesList = [...ruleNames.map(name => rules[name]?.() || (() => ({continue:true}))), ...customRules];
-       return (source, target) => compare(source, target, rulesList);
-   }
-   
+function createComparison(ruleNames, customRules = []) {
+    return (source, target) => {
+        const rulesList = [
+            ...ruleNames.map(ruleName => {
+                // Для правил, которым нужны параметры
+                if (ruleName === 'skipNonExistentSourceFields') {
+                    return rules[ruleName](source);
+                }
+                return rules[ruleName]();
+            }),
+            ...customRules
+        ];
+
+        return compare(source, target, rulesList);
+    };
+}
 
 // Экспортируем компоненты модуля
 // Подробнее: это делает функции доступными для импорта в другие файлы,
