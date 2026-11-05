@@ -1,5 +1,5 @@
-//import './fonts/ys-display/fonts.css'
-//import './style.css'
+import './fonts/ys-display/fonts.css'
+import './style.css'
 
 import {data as sourceData} from "./data/dataset_1.js";
 
@@ -54,9 +54,16 @@ const sampleTable = initTable({
 }, render);
 
 // @todo: инициализация
+
 const applyPagination = initPagination(
-    sampleTable.pagination.elements,           // передаём сюда элементы пагинации, найденные в шаблоне
-    (el, page, isCurrent) => {                    // и колбэк, чтобы заполнять кнопки страниц данными
+    {
+        // Нам нужно достать конкретные элементы из пагинации
+        pages: sampleTable.pagination.elements.pages,
+        fromRow: sampleTable.pagination.elements.fromRow,
+        toRow: sampleTable.pagination.elements.toRow,
+        totalRows: sampleTable.pagination.elements.totalRows
+    },
+    (el, page, isCurrent) => {
         const input = el.querySelector('input');
         const label = el.querySelector('span');
         input.value = page;
@@ -65,6 +72,7 @@ const applyPagination = initPagination(
         return el;
     }
 );
+
 //@todo 2 инициализация
 const applySorting = initSorting([        // Нам нужно передать сюда массив элементов, которые вызывают сортировку, чтобы изменять их визуальное представление
     sampleTable.header.elements.sortByDate,
@@ -74,9 +82,9 @@ const applyFiltering = initFiltering(sampleTable.filter.elements, {    // пер
     searchBySeller: indexes.sellers                                    // для элемента с именем searchBySeller устанавливаем массив продавцов
 });
 
-const appleSearching = initSearching('search');
+const applySearching = initSearching('search');
 
 const appRoot = document.querySelector('#app');
 appRoot.appendChild(sampleTable.container);
 
-render();
+sampleTable.render(data); 
