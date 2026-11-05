@@ -87,4 +87,4 @@ const applySearching = initSearching('search');
 const appRoot = document.querySelector('#app');
 appRoot.appendChild(sampleTable.container);
 
-sampleTable.render(data); 
+render(); 
