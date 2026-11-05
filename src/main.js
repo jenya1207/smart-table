@@ -42,6 +42,10 @@ function render(action) {
     // @todo: использование
     result = applyPagination(result, state, action);
     //@todo 2 использование
+    result = applyFiltering(result, state, action);
+
+    // 3. Сортировка
+    result = applySorting(result, state, action);
 
     sampleTable.render(result)
 }
