@@ -37,17 +37,18 @@ function collectState() {
  * @param {HTMLButtonElement?} action
  */
 function render(action) {
-    let state = collectState(); // состояние полей из таблицы
+       let state = collectState(); // состояние полей из таблицы
     let result = [...data]; // копируем для последующего изменения
     // @todo: использование
-    result = applyPagination(result, state, action);
-    //@todo 2 использование
     result = applyFiltering(result, state, action);
+    result = applySearching(result, state, action);
 
     // 3. Сортировка
     result = applySorting(result, state, action);
+    result = applyPagination(result, state, action);
 
     sampleTable.render(result)
+
 }
 
 const sampleTable = initTable({
